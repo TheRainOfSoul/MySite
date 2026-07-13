@@ -58,8 +58,11 @@ body {
     pointer-events: none;
     z-index: 9999;
     transition: width 0.2s, height 0.2s, background-color 0.2s;
-    mix-blend-mode: difference;
-    will-change: transform, width, height;
+    /* mix-blend-mode: difference removed: it forced the fixed, per-frame-moving
+       cursor to re-blend against 16 backdrop-filter:blur panels every frame,
+       which dropped frames and made the cursor stutter. The cyan ring stays
+       visible on both themes without it. */
+    will-change: transform;
 }
 
 .custom-cursor.hover {
