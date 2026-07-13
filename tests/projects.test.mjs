@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { firstMeaningfulLine } from "./projects.js";
+import { firstMeaningfulLine } from "../netlify/functions/projects.js";
 
 test("skips headings, badges, and images; returns first prose line", () => {
   const md = [
