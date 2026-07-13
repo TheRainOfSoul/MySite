@@ -4,6 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  # GITHUB_USERNAME is a public handle, not a secret — it legitimately appears in
+  # code as a fallback default. Keep secret-scanning on for GITHUB_TOKEN only.
+  SECRETS_SCAN_OMIT_KEYS = "GITHUB_USERNAME"
 
 [[redirects]]
   from = "/api/projects"
