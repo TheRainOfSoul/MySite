@@ -293,8 +293,9 @@ document.addEventListener('mousemove', e => {
 });
 
 function renderCursor() {
-    cursorX += (mouseX - cursorX) * 0.5; 
-    cursorY += (mouseY - cursorY) * 0.5;
+    // Track the pointer directly (no smoothing) so the ring doesn't trail behind.
+    cursorX = mouseX;
+    cursorY = mouseY;
     cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
     requestAnimationFrame(renderCursor);
 }
