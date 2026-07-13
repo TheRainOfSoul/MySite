@@ -1,7 +1,6 @@
 // github-projects.js — auto-populates the Projects section from GitHub.
 const PROJECTS_CONFIG = {
   endpoint: "/api/projects",           // Netlify proxy (holds the token server-side)
-  cacheMinutes: 60,                    // localStorage cache TTL
   fallbackUsername: "TheRainOfSoul",   // public-only fallback for local dev (no function)
   overrides: {
     // "repo-name": { title, description, live, tags: ["a","b"], order: 1, hide: true }
@@ -223,15 +222,17 @@ async function loadProjects() {
   if (!grid) return;
 
   const cache = readCache();
-  const fresh = cache && (Date.now() - cache.ts) < PROJECTS_CONFIG.cacheMinutes * 60000;
-  if (cache && cache.projects && cache.projects.length) {
+  const hasCache = !!(cache && cache.projects && cache.projects.length);
+  if (hasCache) {
     LOADED_PROJECTS = cache.projects;
-    renderProjects(cache.projects);
-    if (fresh) return;
+    renderProjects(cache.projects);   // instant paint from last known list
   } else {
     renderSkeletons(grid);
   }
 
+  // Always revalidate in the background, so newly added/removed repos (and the
+  // switch from public-fallback to the full private list) show up on the very
+  // next load instead of being hidden behind a stale cache.
   try {
     let projects;
     try { projects = await fetchFromProxy(); }
@@ -240,7 +241,7 @@ async function loadProjects() {
     writeCache(projects);
     renderProjects(projects);
   } catch {
-    if (cache && cache.projects && cache.projects.length) return; // keep stale
+    if (hasCache) return;             // keep the cached paint on network failure
     renderError();
   }
 }
