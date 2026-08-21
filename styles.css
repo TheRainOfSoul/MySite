@@ -41,34 +41,6 @@ body {
     overflow-x: hidden;
     position: relative;
     transition: background-color 0.5s ease, color 0.5s ease;
-    cursor: none; /* Hide default cursor */
-}
-
-/* Custom Cursor */
-.custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    /* Use translate3d for hardware acceleration instead of top/left animation */
-    transform: translate3d(-50%, -50%, 0);
-    pointer-events: none;
-    z-index: 9999;
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
-    /* mix-blend-mode: difference removed: it forced the fixed, per-frame-moving
-       cursor to re-blend against 16 backdrop-filter:blur panels every frame,
-       which dropped frames and made the cursor stutter. The cyan ring stays
-       visible on both themes without it. */
-    will-change: transform;
-}
-
-.custom-cursor.hover {
-    width: 40px;
-    height: 40px;
-    background-color: rgba(0, 240, 255, 0.2);
 }
 
 /* Particles Canvas */
@@ -82,28 +54,23 @@ body {
     pointer-events: none;
 }
 
-/* Background Glows */
+/* Background Glows.
+   A radial-gradient paints the same soft blob that `filter: blur(150px)` did,
+   but without re-rasterising a 60vw x 60vw blur; the hue-rotate animation on top
+   of that blur was re-running the whole filter chain every single frame. */
 .bg-glow {
     position: fixed;
     width: 60vw;
     height: 60vw;
     border-radius: 50%;
-    filter: blur(150px);
     z-index: -1;
-    opacity: 0.15;
+    opacity: 0.18;
     pointer-events: none;
     transition: background 0.5s ease;
-    animation: hueShift 10s infinite alternate;
-    will-change: filter;
 }
 
-@keyframes hueShift {
-    0% { filter: blur(150px) hue-rotate(0deg); }
-    100% { filter: blur(150px) hue-rotate(45deg); }
-}
-
-.glow-primary { background: var(--primary-color); }
-.glow-secondary { background: var(--secondary-color); }
+.glow-primary { background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%); }
+.glow-secondary { background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%); }
 
 /* Typography */
 h1, h2, h3, h4, h5 {
@@ -117,12 +84,9 @@ h1, h2, h3, h4, h5 {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
-    animation: textGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes textGlow {
-    0% { filter: drop-shadow(0 0 2px rgba(0,240,255,0.2)); }
-    100% { filter: drop-shadow(0 0 10px rgba(176,38,255,0.6)); }
+    /* Static glow: the old infinite drop-shadow animation re-filtered every
+       gradient heading on the page 60 times a second. */
+    filter: drop-shadow(0 0 6px rgba(176, 38, 255, 0.35));
 }
 
 .container {
@@ -145,7 +109,7 @@ h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
     font-weight: 500;
     text-decoration: none;
-    cursor: none; /* override default */
+    cursor: pointer;
     transition: all 0.3s ease;
     border: none;
     text-align: center;
@@ -210,7 +174,7 @@ h1, h2, h3, h4, h5 {
     font-weight: 700;
     color: var(--text-color);
     text-decoration: none;
-    cursor: none;
+    cursor: pointer;
 }
 
 .logo span { color: var(--primary-color); }
@@ -227,7 +191,7 @@ h1, h2, h3, h4, h5 {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
-    cursor: none;
+    cursor: pointer;
 }
 
 .nav-links a:hover { color: var(--primary-color); }
@@ -245,7 +209,7 @@ h1, h2, h3, h4, h5 {
     font-family: var(--font-body);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    cursor: none;
+    cursor: pointer;
     outline: none;
 }
 
@@ -530,30 +494,23 @@ h1, h2, h3, h4, h5 {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    /* No backdrop-filter and no idle float animation here: ten permanently
+       animating blur-behind panels forced a full backdrop re-blur every frame. */
     background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.08);
     padding: 0.8rem 1.5rem;
     border-radius: 40px;
     font-family: var(--font-heading);
     font-weight: 500;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: none;
     position: relative;
     overflow: hidden;
-    animation: float 6s ease-in-out infinite;
 }
 
 [data-theme="light"] .skill-tag {
     background: linear-gradient(145deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.01) 100%);
     border-color: rgba(0,0,0,0.05);
 }
-
-/* Stagger floating animation */
-.skill-tag:nth-child(even) { animation-delay: 1s; }
-.skill-tag:nth-child(3n) { animation-delay: 2s; }
-.skill-tag:nth-child(4n) { animation-delay: 1.5s; }
 
 .skill-tag::before {
     content: '';
@@ -601,7 +558,7 @@ h1, h2, h3, h4, h5 {
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 
 .project-card {
-    cursor: none;
+    cursor: pointer;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -746,7 +703,7 @@ h1, h2, h3, h4, h5 {
     background: rgba(128, 128, 128, 0.1);
     border: 1px solid var(--glass-border); border-radius: 12px;
     color: var(--text-color); font-family: var(--font-body);
-    transition: all 0.3s; cursor: none;
+    transition: all 0.3s;
     font-size: 1rem;
 }
 .glass-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2); }
@@ -772,7 +729,7 @@ h1, h2, h3, h4, h5 {
     border: 1px solid var(--glass-border);
     text-decoration: none;
     transition: all 0.3s ease;
-    cursor: none;
+    cursor: pointer;
 }
 
 [data-theme="light"] .social-link-item { background: rgba(0, 0, 0, 0.03); }
@@ -819,10 +776,10 @@ h1, h2, h3, h4, h5 {
     visibility: hidden; opacity: 0; transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 .modal.active { visibility: visible; opacity: 1; }
-.modal-backdrop { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); cursor: none;}
+.modal-backdrop { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); cursor: pointer;}
 .modal-content { position: relative; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; z-index: 1001; transform: translateY(20px); transition: transform 0.3s ease; }
 .modal.active .modal-content { transform: translateY(0); }
-.modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: var(--text-muted); font-size: 2rem; cursor: none; line-height: 1; transition: color 0.3s; }
+.modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: var(--text-muted); font-size: 2rem; cursor: pointer; line-height: 1; transition: color 0.3s; }
 .modal-close:hover { color: var(--primary-color); }
 .modal-img-placeholder { width: 100%; height: 300px; background: rgba(128,128,128,0.2); border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); }
 .modal-links { display: flex; gap: 1rem; }
@@ -857,16 +814,18 @@ h1, h2, h3, h4, h5 {
 }
 
 /* Scroll Progress Bar */
+/* Driven by transform, not width: scaling composites, resizing re-layouts. */
 #scroll-progress {
     position: fixed;
     top: 0;
     left: 0;
-    width: 0%;
+    width: 100%;
     height: 3px;
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     z-index: 10000;
     box-shadow: 0 0 10px var(--primary-color);
-    transition: width 0.1s;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
     pointer-events: none;
 }
 
@@ -946,8 +905,6 @@ h1, h2, h3, h4, h5 {
     
     /* Global fixes */
     .section-title { font-size: 2rem; }
-    .custom-cursor { display: none; } /* disable custom cursor on mobile */
-    body, a, button, input, textarea, .logo, .theme-toggle, .lang-select, .skill-tag, .project-card, .modal-close { cursor: auto !important; }
 }
 
 /* --- GitHub projects: dynamic cards --- */
@@ -1000,3 +957,14 @@ h1, h2, h3, h4, h5 {
 /* error state */
 .projects-error { text-align: center; padding: 2rem; opacity: .85; }
 .projects-error .btn { margin-top: 1rem; }
+
+/* Accessibility: honour the OS "reduce motion" setting. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    #particles-canvas { display: none; }
+}

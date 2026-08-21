@@ -202,6 +202,7 @@ async function fetchPublicFallback() {
   );
   if (!res.ok) throw new Error("public " + res.status);
   const repos = await res.json();
+  if (!Array.isArray(repos)) throw new Error("bad shape");   // GitHub answers errors with an object
   return repos.filter(r => !r.fork && !r.archived).map(r => ({
     name: r.name,
     title: null,

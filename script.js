@@ -187,8 +187,11 @@ const projectsTitle = document.getElementById('projects-title');
 const contactTitle = document.getElementById('contact-title');
 
 function setLanguage(lang) {
+    if (!translations[lang]) lang = 'ru';
     currentLang = lang;
     window.currentLang = currentLang;
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('lang', lang); } catch (e) { /* private mode */ }
     const dict = translations[lang];
 
     elementsToTranslate.forEach(el => {
@@ -266,10 +269,9 @@ function resetTyping() {
 const themeToggle = document.getElementById('theme-toggle');
 const htmlEl = document.documentElement;
 
-// Load from local storage
-const savedTheme = localStorage.getItem('theme') || 'dark';
-htmlEl.setAttribute('data-theme', savedTheme);
-themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+// The inline <head> script already applied the saved theme before first paint;
+// here we only sync the toggle's icon with it.
+themeToggle.textContent = htmlEl.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
 
 themeToggle.addEventListener('click', () => {
     const currentTheme = htmlEl.getAttribute('data-theme');
@@ -280,32 +282,9 @@ themeToggle.addEventListener('click', () => {
     updateParticlesColor();
 });
 
-// Custom Cursor
-const cursor = document.querySelector('.custom-cursor');
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-let cursorX = mouseX;
-let cursorY = mouseY;
-
-document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-function renderCursor() {
-    // Track the pointer directly (no smoothing) so the ring doesn't trail behind.
-    cursorX = mouseX;
-    cursorY = mouseY;
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-    requestAnimationFrame(renderCursor);
-}
-requestAnimationFrame(renderCursor);
-
-const hoverElements = document.querySelectorAll('a, button, .skill-tag, .project-card, select, input, textarea');
-hoverElements.forEach(el => {
-    el.addEventListener('mouseover', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-});
+// The custom cursor is gone: a DOM element can only ever be repainted a frame
+// or more after the pointer moves, so it always lagged the real cursor. The
+// native one is drawn by the compositor and never lags.
 
 // Scroll Animations
 const observerOptions = {
@@ -327,32 +306,35 @@ document.querySelectorAll('.fade-in').forEach(element => {
     observer.observe(element);
 });
 
-// Apply interactive effects to dynamically-added project cards (github-projects.js).
-function enhanceProjectCards(cards) {
-    cards.forEach(card => {
-        // 3D tilt + glow tracking
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const cx = rect.width / 2, cy = rect.height / 2;
-            const rx = ((e.clientY - rect.top - cy) / cy) * -5;
-            const ry = ((e.clientX - rect.left - cx) / cx) * 5;
-            card.style.transform =
-                `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.02,1.02,1.02)`;
-            card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-            card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform =
-                `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)`;
-        });
-        // custom cursor hover state
-        card.addEventListener('mouseover', () => cursor.classList.add('hover'));
-        card.addEventListener('mouseout', () => cursor.classList.remove('hover'));
-        // scroll-reveal
-        observer.observe(card);
+// 3D tilt + glow tracking. The card's box is measured once on enter instead of
+// on every mousemove, so moving the pointer no longer forces a layout per frame.
+function attachTilt(el) {
+    let rect = null;
+    el.addEventListener('mouseenter', () => { rect = el.getBoundingClientRect(); });
+    el.addEventListener('mousemove', e => {
+        if (!rect) rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+        const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
+        el.style.transform =
+            `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        el.style.setProperty('--mouse-x', `${x}px`);
+        el.style.setProperty('--mouse-y', `${y}px`);
+    });
+    el.addEventListener('mouseleave', () => {
+        rect = null;
+        el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
     });
 }
-window.enhanceProjectCards = enhanceProjectCards;
+
+// Apply interactive effects to dynamically-added project cards (github-projects.js).
+window.enhanceProjectCards = function (cards) {
+    cards.forEach(card => {
+        attachTilt(card);
+        observer.observe(card);   // scroll-reveal
+    });
+};
 
 // Smooth Scrolling
 document.querySelectorAll('.nav-links a[href^="#"], .hero-actions a').forEach(anchor => {
@@ -384,27 +366,24 @@ function closeModal() {
 
 modalClose.addEventListener('click', closeModal);
 modalBackdrop.addEventListener('click', closeModal);
-
-// 3D Tilt Effect for Cards
-const tiltCards = document.querySelectorAll('.tilt-card');
-tiltCards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-    });
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
 });
+
+// Contact form — no backend here, so hand the message to the visitor's mail app.
+const CONTACT_EMAIL = 'haykohovhann@gmail.com';
+document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const from = document.getElementById('email').value;
+    const subject = `Портфолио: ${document.getElementById('name').value}`;
+    const body = `${document.getElementById('message').value}\n\n${from}`;
+    window.location.href =
+        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+// 3D Tilt Effect for Cards (also sets --mouse-x/--mouse-y for the glow trace,
+// which used to be a second, duplicate mousemove listener on the same cards).
+document.querySelectorAll('.tilt-card').forEach(attachTilt);
 
 
 // Particles Background
@@ -417,10 +396,17 @@ canvas.height = window.innerHeight;
 
 let particleColor = htmlEl.getAttribute('data-theme') === 'light' ? 'rgba(0, 119, 255, 0.2)' : 'rgba(0, 240, 255, 0.2)';
 
+// Debounced, and ignores height-only changes: on mobile the browser chrome
+// hiding/showing fires resize constantly while scrolling.
+let resizeTimer;
 window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initParticles();
+    if (canvas.width === window.innerWidth) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+    }, 200);
 });
 
 function updateParticlesColor() {
@@ -475,11 +461,13 @@ function animateParticles() {
 // Magnetic Elements
 const magneticElements = document.querySelectorAll('.btn, .skill-tag, .theme-toggle, .lang-select, .modal-close, .social-link-item');
 magneticElements.forEach(el => {
+    let rect = null;
+    el.addEventListener('mouseenter', () => { rect = el.getBoundingClientRect(); });
     el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
+        if (!rect) rect = el.getBoundingClientRect();
         const x = (e.clientX - rect.left) - rect.width / 2;
         const y = (e.clientY - rect.top) - rect.height / 2;
-        
+
         // Combine with existing transform if it's a skill tag, otherwise just translate
         if(el.classList.contains('skill-tag')) {
             el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
@@ -489,49 +477,46 @@ magneticElements.forEach(el => {
     });
     
     el.addEventListener('mouseleave', () => {
+        rect = null;
         el.style.transform = '';
     });
 });
 
-// Glow Tracing Cards
-const trackingCards = document.querySelectorAll('.project-card, .about-card, .contact-form-card, .info-card');
-trackingCards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-    });
-});
-
-// Preloader
+// Preloader — hidden as soon as the page is loaded (the old 800ms artificial
+// delay just held the finished page behind a spinner).
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
-    if(preloader) {
-        setTimeout(() => {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.visibility = 'hidden';
-                preloader.style.display = 'none';
-            }, 500);
-        }, 800);
-    }
+    if (!preloader) return;
+    preloader.style.opacity = '0';
+    setTimeout(() => { preloader.style.display = 'none'; }, 500);
 });
 
-// Scroll Progress Bar
+// Scroll Progress Bar — measured once per frame and drawn with scaleX, so
+// scrolling no longer triggers a layout read + width change per scroll event.
 const scrollProgress = document.getElementById('scroll-progress');
+let scrollTicking = false;
 window.addEventListener('scroll', () => {
-    if(!scrollProgress) return;
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollPercent = (scrollTop / scrollHeight) * 100;
-    scrollProgress.style.width = scrollPercent + '%';
-});
+    if (!scrollProgress || scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+        const doc = document.documentElement;
+        const scrollable = doc.scrollHeight - doc.clientHeight;
+        const progress = scrollable > 0 ? doc.scrollTop / scrollable : 0;
+        scrollProgress.style.transform = `scaleX(${progress})`;
+        scrollTicking = false;
+    });
+}, { passive: true });
 
 // Initialization
 document.addEventListener("DOMContentLoaded", function() {
+    let saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) { /* private mode */ }
+    langSelect.value = translations[saved] ? saved : langSelect.value;
     setLanguage(langSelect.value);
-    initParticles();
-    animateParticles();
+
+    // Skip the particle loop entirely when the visitor asked for reduced motion.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        initParticles();
+        animateParticles();
+    }
 });

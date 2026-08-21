@@ -72,6 +72,8 @@ async function handler() {
   } catch {
     return json(502, { error: "Failed to reach GitHub" });
   }
+  // GitHub reports some errors with 200 + an object body; don't call .filter on that.
+  if (!Array.isArray(repos)) return json(502, { error: "Unexpected GitHub response" });
 
   repos = repos.filter(r =>
     !r.fork && !r.archived && !exclude.includes(r.name.toLowerCase())

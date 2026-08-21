@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="page_title">Универсальный IT-Специалист | Портфолио</title>
-    <meta name="description" content="Portfolio">
+    <meta name="description" content="Портфолио универсального IT-специалиста: веб- и мобильная разработка, интеграция ИИ, No-Code, видеомонтаж, ремонт ПК.">
+    <!-- Apply the saved theme before first paint so light mode doesn't flash dark. -->
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||'dark'}catch(e){}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="files/logo.ico">
+    <script src="script.js" defer></script>
+    <script src="github-projects.js" defer></script>
+    <noscript><style>.fade-in{opacity:1;transform:none}#preloader{display:none}</style></noscript>
 </head>
 <body>
     <!-- Preloader -->
@@ -20,9 +25,6 @@
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress"></div>
 
-    <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
-    
     <!-- Particles Background -->
     <canvas id="particles-canvas"></canvas>
 
@@ -33,7 +35,7 @@
     <!-- Navigation -->
     <nav class="glass-nav">
         <div class="container nav-container">
-            <a href="#" class="logo">Port<span data-i18n="logo_span">folio</span></a>
+            <a href="#hero" class="logo">Port<span data-i18n="logo_span">folio</span></a>
             <ul class="nav-links">
                 <li><a href="#about" data-i18n="nav_about">Обо мне</a></li>
                 <li><a href="#skills" data-i18n="nav_skills">Навыки</a></li>
@@ -55,7 +57,7 @@
     <section id="hero" class="container hero">
         <div class="hero-content fade-in">
             <h1 class="hero-title" id="hero-greeting">Привет, я создаю <br><span class="text-gradient">цифровую магию</span></h1>
-            <p class="hero-subtitle"><span id="hero-prefix">Я </span><span id="typed-text" class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+            <p class="hero-subtitle"><span id="hero-prefix" data-i18n="hero_prefix">Я </span><span id="typed-text" class="typed-text"></span><span class="cursor">&nbsp;</span></p>
             <p class="hero-description" data-i18n="hero_desc">Объединяю код, искусственный интеллект и дизайн для создания крутых продуктов и решения сложных задач.</p>
             <div class="hero-actions">
                 <a href="#projects" class="btn btn-primary" data-i18n="hero_btn_projects">Мои проекты</a>
@@ -77,7 +79,7 @@
             <!-- Photo Column -->
             <div class="about-photo-wrapper fade-in tilt-card">
                 <div class="photo-container">
-                    <img src="files/photo.jpg" alt="Мое фото" class="about-photo">
+                    <img src="files/photo.jpg" alt="Айк Ованнисян" class="about-photo" width="1280" height="1280" loading="lazy" decoding="async">
                 </div>
                 <!-- Decorative elements around photo -->
                 <div class="photo-decor photo-decor-1"></div>
@@ -113,9 +115,9 @@
                 </ul>
                 <p data-i18n="about_p2" class="about-summary">Такой широкий спектр навыков позволяет мне видеть проекты целиком, от идеи и железа до финального интерфейса.</p>
                 <div class="about-actions mt-4">
-                    <a href="files/Hayk Hovhannisyan.pdf" target="_blank" class="btn btn-primary cv-btn" data-i18n="about_cv">
+                    <a href="files/Hayk%20Hovhannisyan.pdf" target="_blank" rel="noopener" class="btn btn-primary cv-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle; margin-top: -2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        Скачать CV
+                        <span data-i18n="about_cv">Скачать CV</span>
                     </a>
                 </div>
             </div>
@@ -184,15 +186,15 @@
                 <form id="contact-form">
                     <div class="form-group">
                         <label for="name" data-i18n="form_name">Имя</label>
-                        <input type="text" id="name" required class="glass-input" placeholder="Hayk Hovhannisyan">
+                        <input type="text" id="name" name="name" autocomplete="name" required class="glass-input" placeholder="Hayk Hovhannisyan">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" required class="glass-input" placeholder="haykohovhann@gmail.com">
+                        <input type="email" id="email" name="email" autocomplete="email" required class="glass-input" placeholder="haykohovhann@gmail.com">
                     </div>
                     <div class="form-group">
                         <label for="message" data-i18n="form_msg">Сообщение</label>
-                        <textarea id="message" rows="4" required class="glass-input" placeholder="Your message..."></textarea>
+                        <textarea id="message" name="message" rows="4" required class="glass-input" placeholder="Your message..."></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary w-100" id="form-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle; margin-top: -2px;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -209,7 +211,7 @@
                     
                     <ul class="social-links-rich">
                         <li>
-                            <a href="#" target="_blank" class="social-link-item">
+                            <a href="https://t.me/tvayin_horizon" target="_blank" rel="noopener" class="social-link-item">
                                 <div class="social-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
                                 </div>
@@ -220,7 +222,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" class="social-link-item">
+                            <a href="https://github.com/TheRainOfSoul" target="_blank" rel="noopener" class="social-link-item">
                                 <div class="social-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                                 </div>
@@ -230,8 +232,9 @@
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" target="_blank" class="social-link-item">
+                        <!-- YouTube: put the real channel URL in href and drop `hidden` to show it again. -->
+                        <li hidden>
+                            <a href="#" target="_blank" rel="noopener" class="social-link-item">
                                 <div class="social-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
                                 </div>
@@ -242,13 +245,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" class="social-link-item">
+                            <a href="https://www.linkedin.com/in/haykhovhannisyan97" target="_blank" rel="noopener" class="social-link-item">
                                 <div class="social-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                                 </div>
                                 <div class="social-text">
                                     <span class="social-name">LinkedIn</span>
-                                    <span class="social-handle">https://www.linkedin.com/in/haykhovhannisyan97</span>
+                                    <span class="social-handle">in/haykhovhannisyan97</span>
                                 </div>
                             </a>
                         </li>
@@ -272,14 +275,12 @@
                 <div id="modal-image" class="modal-img-placeholder mb-4">Изображение</div>
                 <div id="modal-description" class="modal-text mb-4">Description</div>
                 <div class="modal-links">
-                    <a href="#" id="modal-github" class="btn btn-outline" target="_blank" data-i18n="btn_github">Смотреть на GitHub</a>
-                    <a href="#" id="modal-live" class="btn btn-primary" target="_blank" data-i18n="btn_live">Live Demo</a>
+                    <a href="#" id="modal-github" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="btn_github">Смотреть на GitHub</a>
+                    <a href="#" id="modal-live" class="btn btn-primary" target="_blank" rel="noopener" data-i18n="btn_live">Live Demo</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
-    <script src="github-projects.js"></script>
 </body>
 </html>
