@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="page_title">Универсальный IT-Специалист | Портфолио</title>
-    <meta name="description" content="Портфолио универсального IT-специалиста: веб- и мобильная разработка, интеграция ИИ, No-Code, видеомонтаж, ремонт ПК.">
+    <title data-i18n="page_title">Айк Оганнисян — системный администратор</title>
+    <meta name="description" content="Айк Оганнисян — системный администратор в Ереване: IT-поддержка офисов, сети и Wi-Fi, видеонаблюдение Dahua/Hikvision, охранные системы и СКУД, автоматизация на PowerShell.">
+    <meta property="og:title" content="Hayk Hovhannisyan — System Administrator">
+    <meta property="og:description" content="IT support, networks, CCTV and security systems in Yerevan. CV, experience and projects.">
+    <meta property="og:image" content="files/photo.jpg">
     <!-- Apply the saved theme before first paint so light mode doesn't flash dark. -->
     <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||'dark'}catch(e){}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +38,11 @@
     <!-- Navigation -->
     <nav class="glass-nav">
         <div class="container nav-container">
-            <a href="#hero" class="logo">Port<span data-i18n="logo_span">folio</span></a>
+            <a href="#hero" class="logo">Hayk<span>.H</span></a>
             <ul class="nav-links">
                 <li><a href="#about" data-i18n="nav_about">Обо мне</a></li>
-                <li><a href="#skills" data-i18n="nav_skills">Навыки</a></li>
+                <li><a href="#experience" data-i18n="nav_experience">Опыт</a></li>
+                <li class="nav-optional"><a href="#skills" data-i18n="nav_skills">Навыки</a></li>
                 <li><a href="#projects" data-i18n="nav_projects">Проекты</a></li>
                 <li><a href="#contact" data-i18n="nav_contact">Контакты</a></li>
             </ul>
@@ -56,13 +60,18 @@
     <!-- Hero Section -->
     <section id="hero" class="container hero">
         <div class="hero-content fade-in">
-            <h1 class="hero-title" id="hero-greeting">Привет, я создаю <br><span class="text-gradient">цифровую магию</span></h1>
+            <h1 class="hero-title" id="hero-greeting">Айк Оганнисян <br><span class="text-gradient">системный администратор</span></h1>
             <p class="hero-subtitle"><span id="hero-prefix" data-i18n="hero_prefix">Я </span><span id="typed-text" class="typed-text"></span><span class="cursor">&nbsp;</span></p>
-            <p class="hero-description" data-i18n="hero_desc">Объединяю код, искусственный интеллект и дизайн для создания крутых продуктов и решения сложных задач.</p>
+            <p class="hero-description" data-i18n="hero_desc">IT-поддержка офисов, сети и Wi-Fi, видеонаблюдение и системы безопасности — на выезде, по телефону и удалённо. Ереван.</p>
             <div class="hero-actions">
-                <a href="#projects" class="btn btn-primary" data-i18n="hero_btn_projects">Мои проекты</a>
+                <a href="#experience" class="btn btn-primary" data-i18n="hero_btn_experience">Опыт работы</a>
                 <a href="#contact" class="btn btn-glass" data-i18n="hero_btn_contact">Связаться</a>
             </div>
+            <ul class="hero-stats">
+                <li><strong>7+</strong><span data-i18n="stat_exp">лет опыта работы</span></li>
+                <li><strong>3+</strong><span data-i18n="stat_it">года в IT-поддержке</span></li>
+                <li><strong>3</strong><span data-i18n="stat_langs">языка: HY · RU · EN</span></li>
+            </ul>
         </div>
         <div class="hero-visual fade-in">
             <div class="glass-orb">
@@ -79,7 +88,7 @@
             <!-- Photo Column -->
             <div class="about-photo-wrapper fade-in tilt-card">
                 <div class="photo-container">
-                    <img src="files/photo.jpg" alt="Айк Ованнисян" class="about-photo" width="1280" height="1280" loading="lazy" decoding="async">
+                    <img src="files/photo.jpg" alt="Айк Оганнисян" class="about-photo" width="1280" height="1280" loading="lazy" decoding="async">
                 </div>
                 <!-- Decorative elements around photo -->
                 <div class="photo-decor photo-decor-1"></div>
@@ -88,34 +97,34 @@
 
             <!-- Text Column -->
             <div class="glass-card about-card fade-in tilt-card">
-                <h3 data-i18n="about_subtitle" class="about-subtitle-rich">Универсальный солдат IT</h3>
-                <p data-i18n="about_p1" class="about-lead">Я не ограничиваюсь одной сферой. Мой подход — это решение задач любыми эффективными способами. Я занимаюсь:</p>
+                <h3 data-i18n="about_subtitle" class="about-subtitle-rich">Системный администратор и IT-поддержка</h3>
+                <p data-i18n="about_p1" class="about-lead">Более 3 лет практического опыта поддержки офисов. В DG Computers обслуживаю IT клиентов и монтирую системы безопасности. Чем занимаюсь:</p>
                 
                 <ul class="about-features-list">
                     <li>
                         <span class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
-                        <span data-i18n="about_li1">Разработкой современных веб и мобильных приложений</span>
+                        <span data-i18n="about_li1">Поддержкой пользователей 1–2 линии: на выезде, по телефону, через AnyDesk/RDP</span>
                     </li>
                     <li>
                         <span class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
-                        <span data-i18n="about_li2">Профессиональным видеомонтажом</span>
+                        <span data-i18n="about_li2">Настройкой сетей: роутеры, коммутаторы, Wi-Fi, VPN (Tailscale)</span>
                     </li>
                     <li>
                         <span class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
-                        <span data-i18n="about_li3">Внедрением нейросетей и ИИ в бизнес-процессы</span>
+                        <span data-i18n="about_li3">Монтажом видеонаблюдения Dahua/Hikvision, сигнализации и СКУД</span>
                     </li>
                     <li>
                         <span class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
-                        <span data-i18n="about_li4">Сборкой проектов на No-Code платформах</span>
+                        <span data-i18n="about_li4">Диагностикой и ремонтом ПК, ноутбуков, принтеров и МФУ</span>
                     </li>
                     <li>
                         <span class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
-                        <span data-i18n="about_li5">Ремонтом и настройкой ПК на железном уровне</span>
+                        <span data-i18n="about_li5">Автоматизацией рутины на PowerShell и собственными инструментами для админа</span>
                     </li>
                 </ul>
-                <p data-i18n="about_p2" class="about-summary">Такой широкий спектр навыков позволяет мне видеть проекты целиком, от идеи и железа до финального интерфейса.</p>
+                <p data-i18n="about_p2" class="about-summary">Быстро осваиваю новое и самостоятельно решаю нестандартные задачи — от кабеля и железа до настройки сервера.</p>
                 <div class="about-actions mt-4">
-                    <a href="files/Hayk%20Hovhannisyan.pdf" target="_blank" rel="noopener" class="btn btn-primary cv-btn">
+                    <a href="files/cv-ru.pdf" id="cv-link" target="_blank" rel="noopener" class="btn btn-primary cv-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle; margin-top: -2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         <span data-i18n="about_cv">Скачать CV</span>
                     </a>
@@ -124,51 +133,26 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="container section">
-        <h2 class="section-title fade-in" id="skills-title">Мои <span class="text-gradient">Навыки</span></h2>
-        <div class="skills-grid fade-in">
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
-                <span>Web Dev</span>
+    <!-- Experience Section (rendered from translations in script.js) -->
+    <section id="experience" class="container section">
+        <h2 class="section-title fade-in" id="experience-title">Опыт <span class="text-gradient">работы</span></h2>
+        <ol class="timeline" id="timeline"></ol>
+        <div class="edu-grid">
+            <div class="glass-card edu-card fade-in">
+                <h3 data-i18n="edu_title">Образование и курсы</h3>
+                <ul id="edu-list"></ul>
             </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
-                <span>App Dev</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
-                <span data-i18n="skill_video">Видеомонтаж</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
-                <span>Prompt Engineering</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></span>
-                <span>AI Integration</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></span>
-                <span>No-Code / Low-Code</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span>
-                <span data-i18n="skill_hardware">Hardware Repair</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path></svg></span>
-                <span>UI/UX Design Basics</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></span>
-                <span>Python</span>
-            </div>
-            <div class="skill-tag">
-                <span class="skill-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span>
-                <span>JavaScript</span>
+            <div class="glass-card edu-card fade-in">
+                <h3 data-i18n="langs_title">Языки</h3>
+                <ul id="langs-list"></ul>
             </div>
         </div>
+    </section>
+
+    <!-- Skills Section (rendered from translations in script.js) -->
+    <section id="skills" class="container section">
+        <h2 class="section-title fade-in" id="skills-title">Мои <span class="text-gradient">навыки</span></h2>
+        <div class="skills-groups" id="skills-groups"></div>
     </section>
 
     <!-- Projects Section -->
@@ -180,21 +164,21 @@
 
     <!-- Contact Section -->
     <section id="contact" class="container section">
-        <h2 class="section-title fade-in" id="contact-title">Останемся <span class="text-gradient">на связи</span></h2>
+        <h2 class="section-title fade-in" id="contact-title">Давайте <span class="text-gradient">на связи</span></h2>
         <div class="contact-grid">
             <div class="glass-card contact-form-card fade-in tilt-card">
                 <form id="contact-form">
                     <div class="form-group">
                         <label for="name" data-i18n="form_name">Имя</label>
-                        <input type="text" id="name" name="name" autocomplete="name" required class="glass-input" placeholder="Hayk Hovhannisyan">
+                        <input type="text" id="name" name="name" autocomplete="name" required class="glass-input" data-i18n="form_name_ph" placeholder="Ваше имя">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" autocomplete="email" required class="glass-input" placeholder="haykohovhann@gmail.com">
+                        <input type="email" id="email" name="email" autocomplete="email" required class="glass-input" placeholder="you@example.com">
                     </div>
                     <div class="form-group">
                         <label for="message" data-i18n="form_msg">Сообщение</label>
-                        <textarea id="message" name="message" rows="4" required class="glass-input" placeholder="Your message..."></textarea>
+                        <textarea id="message" name="message" rows="4" required class="glass-input" data-i18n="form_msg_ph" placeholder="Опишите задачу..."></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary w-100" id="form-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle; margin-top: -2px;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -205,11 +189,33 @@
             <div class="contact-info fade-in">
                 <div class="glass-card info-card tilt-card" style="height: 100%;">
                     <div class="info-header" style="margin-bottom: 2rem;">
-                        <h3 data-i18n="social_title">Соцсети и ссылки</h3>
-                        <p data-i18n="social_desc" class="text-muted" style="font-size: 0.95rem;">Готов к новым проектам и сотрудничеству. Отвечаю быстро!</p>
+                        <h3 data-i18n="social_title">Контакты и ссылки</h3>
+                        <p data-i18n="social_desc" class="text-muted" style="font-size: 0.95rem;">Открыт к предложениям о работе и разовым задачам: сеть, камеры, ПК. Отвечаю быстро!</p>
                     </div>
                     
                     <ul class="social-links-rich">
+                        <li>
+                            <a href="mailto:haykohovhann@gmail.com" class="social-link-item">
+                                <div class="social-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 6l-10 7L2 6"></path></svg>
+                                </div>
+                                <div class="social-text">
+                                    <span class="social-name">Email</span>
+                                    <span class="social-handle">haykohovhann@gmail.com</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+37455611817" class="social-link-item">
+                                <div class="social-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                </div>
+                                <div class="social-text">
+                                    <span class="social-name" data-i18n="phone">Телефон</span>
+                                    <span class="social-handle">+374 55 611 817</span>
+                                </div>
+                            </a>
+                        </li>
                         <li>
                             <a href="https://t.me/tvayin_horizon" target="_blank" rel="noopener" class="social-link-item">
                                 <div class="social-icon">
@@ -262,7 +268,7 @@
     </section>
 
     <footer class="glass-footer">
-        <p><span data-i18n="footer_text">&copy; 2026. Создано с любовью к технологиям.</span></p>
+        <p><span data-i18n="footer_text">&copy; 2026 Айк Оганнисян · Ереван</span></p>
     </footer>
 
     <!-- Project Modal -->
