@@ -4,6 +4,7 @@ const PROJECTS_CONFIG = {
   fallbackUsername: "TheRainOfSoul",   // public-only fallback for local dev (no function)
   overrides: {
     // "repo-name": { title, description, live, tags: ["a","b"], order: 1, hide: true }
+    "hhscript": { order: 1 },   // the CV project, shown first
   },
 };
 
